@@ -2,37 +2,35 @@ veracode_static_scan:
   push:
     trigger: false
     branches_to_run:
-      - develop
-      - main
-      - master
-    branches_to_exclude: null
+      - '*'
+    branches_to_exclude:
+      - branch-1
   pull_request:
     trigger: false
     action:
       - opened
       - synchronize
     target_branch:
-      - analysis_branch
+      - default_branch
   analysis_on_platform: false
   break_build_policy_findings: false
-  break_build_invalid_policy: true
-  break_build_on_error: false
-  error_message: >-
-    Veracode static scan faced a problem. Please contact your Veracode
-    administrator for more information.
-  policy: Foot Locker 30 Day SAST Policy
+  break_build_invalid_policy: false
+  break_build_on_error: true
+  error_message: Veracode static scan faced a problem.
+  policy: Veracode Recommended Medium + SCA
   create_code_scanning_alert: false
   create_issue: false
   issues:
-    trigger: true
+    trigger: false
     commands:
       - Veracode Static Scan
 veracode_sca_scan:
   push:
-    trigger: true
+    trigger: false
     branches_to_run:
       - '*'
-    branches_to_exclude: null
+    branches_to_exclude:
+      - branch-1
   pull_request:
     trigger: false
     action:
@@ -41,9 +39,7 @@ veracode_sca_scan:
     target_branch:
       - default_branch
   break_build_on_error: false
-  error_message: >-
-    Veracode SCA scan faced a problem. Please contact your Veracode
-    administrator for more information.
+  error_message: Veracode static scan faced a problem.
   issues:
     trigger: false
     commands:
@@ -53,7 +49,8 @@ veracode_iac_secrets_scan:
     trigger: false
     branches_to_run:
       - '*'
-    branches_to_exclude: null
+    branches_to_exclude:
+      - branch-1
   pull_request:
     trigger: false
     action:
@@ -63,9 +60,7 @@ veracode_iac_secrets_scan:
       - default_branch
   break_build_policy_findings: false
   break_build_on_error: false
-  error_message: >-
-    Veracode IAC secrets scan faced a problem. Please contact your Veracode
-    administrator for more information.
+  error_message: Veracode static scan faced a problem.
   issues:
     trigger: false
     commands:
